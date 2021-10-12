@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -42,13 +43,11 @@ class AuthController extends GetxController {
 
     if (isValid) {
       _formKey.currentState!.save();
+      print(userEmail);
+      print(userName);
+      print(userPassword);
 
-      submitAuthForm(
-        userEmail.trim(),
-        userPassword.trim(),
-        userName.trim(),
-        isLogin.value,
-      );
+      // User those values to send our auth request ...
     }
   }
 
@@ -59,7 +58,7 @@ class AuthController extends GetxController {
   void submitAuthForm(
     String email,
     String password,
-    String userName,
+    String username,
     bool isLogin,
   ) async {
     UserCredential userCredential;
@@ -75,7 +74,7 @@ class AuthController extends GetxController {
           password: password,
         );
       }
-    } on FirebaseAuthException catch (error) {
+    } on PlatformException catch (error) {
       var message = 'An error occurred, please check your credentials';
 
       if (error.message != null) {
@@ -83,10 +82,9 @@ class AuthController extends GetxController {
       }
 
       Get.snackbar(
-        "An error occurred",
+        "error",
         message,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.red,
       );
     } catch (error) {
       print(error);

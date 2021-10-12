@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/controllers/auth_controller.dart';
+
 import 'package:get/get.dart';
 
 class AuthForm extends GetView<AuthController> {
-  AuthForm({Key? key}) : super(key: key);
+  AuthForm(this.submitFn, {Key? key}) : super(key: key);
+
+  final void Function(
+      String email, String password, String userName, bool isLogin) submitFn;
 
   @override
   Widget build(BuildContext context) {
