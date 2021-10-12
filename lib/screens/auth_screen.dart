@@ -18,7 +18,7 @@ class AuthScreen extends StatelessWidget {
         onTap: () {
           Get.focusScope!.unfocus();
         },
-        child: AuthForm(authController.submitAuthForm),
+        child: AuthForm(),
       ),
     );
   }

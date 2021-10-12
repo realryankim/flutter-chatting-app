@@ -4,10 +4,17 @@ import 'package:flutter_chatting_app/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class AuthForm extends GetView<AuthController> {
-  AuthForm(this.submitFn, {Key? key}) : super(key: key);
+  // AuthForm(this.submitFn, {Key? key}) : super(key: key);
 
-  final void Function(
-      String email, String password, String userName, bool isLogin) submitFn;
+  // property from AuthScreen
+  // () 안에는 얻거나, 저장할 arguments(또는 parameters)
+  // submitFn: property name
+  // final void Function(
+  //   String email,
+  //   String password,
+  //   String userName,
+  //   bool isLogin,
+  // ) submitFn;
 
   @override
   Widget build(BuildContext context) {
@@ -59,31 +66,34 @@ class AuthForm extends GetView<AuthController> {
                           controller.userPassword = value!;
                         }),
                     SizedBox(height: 12),
-                    ElevatedButton(
-                      child:
-                          Text(controller.isLogin.value ? 'Login' : 'Signup'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+                    if (controller.isLoading.value) CircularProgressIndicator(),
+                    if (!controller.isLoading.value)
+                      ElevatedButton(
+                        child:
+                            Text(controller.isLogin.value ? 'Login' : 'Signup'),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          primary: Colors.pink,
+                          onPrimary: Colors.white,
                         ),
-                        primary: Colors.pink,
-                        onPrimary: Colors.white,
+                        onPressed: () {
+                          controller.trySubmit();
+                        },
                       ),
-                      onPressed: () {
-                        controller.trySubmit();
-                      },
-                    ),
-                    TextButton(
-                      child: Text(controller.isLogin.value
-                          ? 'Create new account'
-                          : 'I already have an account'),
-                      style: TextButton.styleFrom(
-                        primary: Colors.pink,
+                    if (!controller.isLoading.value)
+                      TextButton(
+                        child: Text(controller.isLogin.value
+                            ? 'Create new account'
+                            : 'I already have an account'),
+                        style: TextButton.styleFrom(
+                          primary: Colors.pink,
+                        ),
+                        onPressed: () {
+                          controller.toggleLoginButton();
+                        },
                       ),
-                      onPressed: () {
-                        controller.toggleLoginButton();
-                      },
-                    ),
                   ],
                 ),
               ),
