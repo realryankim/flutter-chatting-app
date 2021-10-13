@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chatting_app/bindings/binding.dart';
-import 'package:flutter_chatting_app/screens/auth_screen.dart';
-import 'package:flutter_chatting_app/screens/chat_screen.dart';
+import 'package:flutter_chatting_app/src/app.dart';
+import 'package:flutter_chatting_app/src/bindings/binding.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -37,11 +36,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
       initialBinding: Binding(),
-      initialRoute: '/',
-      getPages: [
-        GetPage(name: '/', page: () => AuthScreen()),
-        GetPage(name: '/chat', page: () => ChatScreen()),
-      ],
+      home: App(),
+      // initialRoute: '/',
+      // getPages: [
+      //   GetPage(name: '/', page: () => AuthScreen()),
+      //   GetPage(name: '/chat', page: () => ChatScreen()),
+      // ],
     );
   }
 }
