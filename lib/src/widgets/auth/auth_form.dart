@@ -15,7 +15,7 @@ class AuthForm extends GetView<AuthController> {
           child: Padding(
             padding: EdgeInsets.all(16),
             child: Form(
-              key: controller.getFormKey(),
+              key: controller.formKey,
               child: Obx(
                 () => Column(
                   mainAxisSize: MainAxisSize.min,

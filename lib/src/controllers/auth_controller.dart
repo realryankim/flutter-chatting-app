@@ -5,13 +5,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthController extends GetxController {
   final _formKey = GlobalKey<FormState>();
-  RxBool isLogin = true.obs;
-  String userEmail = '';
-  String userName = '';
-  String userPassword = '';
-  GlobalKey<FormState> getFormKey() {
-    return _formKey;
-  }
+  final RxBool _isLogin = true.obs;
+  String _userEmail = '';
+  String _userName = '';
+  String _userPassword = '';
+
+  // getter를 활용해서 private 변수를 다른 파일에서 사용하자
+  GlobalKey<FormState> get formKey => _formKey;
+  RxBool get isLogin => _isLogin;
+  String get userEmail => _userEmail;
+  // property는 getter로 가져오고 setter로 설정한다.
+  set userEmail(email) => _userEmail = email;
+  String get userName => _userName;
+  set userName(username) => _userName = username;
+  String get userPassword => _userPassword;
+  set userPassword(password) => _userPassword = password;
 
   final auth = FirebaseAuth.instance;
   RxBool isLoading = false.obs;
