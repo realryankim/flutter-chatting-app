@@ -14,6 +14,7 @@ class NewMessage extends GetView<ChatController> {
         children: [
           Expanded(
             child: TextField(
+              controller: controller.textController,
               decoration: InputDecoration(labelText: 'Send a message...'),
               onChanged: (value) {
                 controller.enterMessage(value);

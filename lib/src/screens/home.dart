@@ -13,8 +13,9 @@ class Home extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
         if (snapshot.hasData) {
           return ChatScreen();
+        } else {
+          return AuthScreen();
         }
-        return AuthScreen();
       },
     );
   }
