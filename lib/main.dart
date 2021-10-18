@@ -37,11 +37,6 @@ class MyApp extends StatelessWidget {
       ),
       initialBinding: Binding(),
       home: App(),
-      // initialRoute: '/',
-      // getPages: [
-      //   GetPage(name: '/', page: () => AuthScreen()),
-      //   GetPage(name: '/chat', page: () => ChatScreen()),
-      // ],
     );
   }
 }
