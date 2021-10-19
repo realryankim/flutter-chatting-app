@@ -13,13 +13,18 @@ class ChatController extends GetxController {
     _enteredMessage = value;
   }
 
-  void sendMessage() {
+  void sendMessage() async {
     Get.focusScope!.unfocus();
     final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
     FirebaseFirestore.instance.collection('chat').add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
-      'userId': user!.uid,
+      'userId': user.uid,
+      'username': userData['username'],
     });
     textController.clear();
   }
