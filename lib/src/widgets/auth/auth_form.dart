@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/src/controllers/auth_controller.dart';
+import 'package:flutter_chatting_app/src/widgets/pickers/user_image.picker.dart';
 
 import 'package:get/get.dart';
 
@@ -20,6 +21,7 @@ class AuthForm extends GetView<AuthController> {
                 () => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    if (!controller.isLogin.value) UserImagePicker(),
                     TextFormField(
                       key: ValueKey('email'),
                       validator: (value) {
