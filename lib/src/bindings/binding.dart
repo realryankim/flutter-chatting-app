@@ -8,6 +8,7 @@ class Binding implements Bindings {
   void dependencies() {
     Get.lazyPut(() => AuthController());
     Get.lazyPut(() => ChatController());
-    Get.lazyPut(() => ImagePickerController());
+    // Do not ImagePickerController for now
+    // Get.lazyPut(() => ImagePickerController());
   }
 }

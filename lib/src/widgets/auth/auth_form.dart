@@ -21,7 +21,10 @@ class AuthForm extends GetView<AuthController> {
                 () => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (!controller.isLogin.value) UserImagePicker(),
+                    if (!controller.isLogin!.value)
+                      UserImagePicker(
+                        imagePickFn: controller.pickedImage,
+                      ),
                     TextFormField(
                       key: ValueKey('email'),
                       validator: (value) {
@@ -36,7 +39,7 @@ class AuthForm extends GetView<AuthController> {
                       },
                     ),
                     // Login 모드가 아닐 때만 = SignUp 모드일 때만 보이도록
-                    if (!controller.isLogin.value)
+                    if (!controller.isLogin!.value)
                       TextFormField(
                         key: ValueKey('username'),
                         validator: (value) {
@@ -61,8 +64,8 @@ class AuthForm extends GetView<AuthController> {
                     if (controller.isLoading.value) CircularProgressIndicator(),
                     if (!controller.isLoading.value)
                       ElevatedButton(
-                        child:
-                            Text(controller.isLogin.value ? 'Login' : 'Signup'),
+                        child: Text(
+                            controller.isLogin!.value ? 'Login' : 'Signup'),
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
@@ -70,21 +73,17 @@ class AuthForm extends GetView<AuthController> {
                           primary: Colors.pink,
                           onPrimary: Colors.white,
                         ),
-                        onPressed: () {
-                          controller.trySubmit();
-                        },
+                        onPressed: controller.trySubmit,
                       ),
                     if (!controller.isLoading.value)
                       TextButton(
-                        child: Text(controller.isLogin.value
+                        child: Text(controller.isLogin!.value
                             ? 'Create new account'
                             : 'I already have an account'),
                         style: TextButton.styleFrom(
                           primary: Colors.pink,
                         ),
-                        onPressed: () {
-                          controller.toggleLoginButton();
-                        },
+                        onPressed: controller.handleLoginButton,
                       ),
                   ],
                 ),

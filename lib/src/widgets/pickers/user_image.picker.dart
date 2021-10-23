@@ -1,27 +1,50 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_chatting_app/src/controllers/image_picker_controller.dart';
-import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
-class UserImagePicker extends GetView<ImagePickerController> {
-  UserImagePicker({Key? key}) : super(key: key);
+class UserImagePicker extends StatefulWidget {
+  UserImagePicker({Key? key, required this.imagePickFn}) : super(key: key);
+
+  final void Function(File pickedImage) imagePickFn;
+
+  @override
+  State<UserImagePicker> createState() => _UserImagePickerState();
+}
+
+class _UserImagePickerState extends State<UserImagePicker> {
+  File? _pickedImageFile;
+
+  void _pickImage() async {
+    final picker = ImagePicker();
+    // final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    final pickedImage = await picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedImage != null) {
+        _pickedImageFile = File(pickedImage.path);
+        print('File path');
+      } else {
+        print('No image selected.');
+      }
+      widget.imagePickFn(_pickedImageFile!);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CircleAvatar(
           radius: 40,
           backgroundColor: Colors.grey,
-          // issue: 이미지를 찍고, 코드를 저장해야 이미지가 보임
-          backgroundImage: controller.pickedImageFile != null
-              ? FileImage(controller.pickedImageFile as File)
-              : null,
+          backgroundImage:
+              _pickedImageFile != null ? FileImage(_pickedImageFile!) : null,
         ),
         TextButton.icon(
-          onPressed: controller.pickImage,
-          icon: Icon(Icons.image),
-          label: Text('Add Image'),
+          onPressed: _pickImage,
+          icon: const Icon(Icons.image),
+          label: const Text('Add Image'),
         ),
       ],
     );

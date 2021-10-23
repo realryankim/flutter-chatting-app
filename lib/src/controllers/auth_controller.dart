@@ -1,20 +1,22 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthController extends GetxController {
+  static AuthController get to => AuthController();
+
   final _formKey = GlobalKey<FormState>();
-  final RxBool _isLogin = true.obs;
+  final RxBool? _isLogin = true.obs;
   String _userEmail = '';
   String _userName = '';
   String _userPassword = '';
+  File? userImageFile;
 
-  // getter를 활용해서 private 변수를 다른 파일에서 사용하자
   GlobalKey<FormState> get formKey => _formKey;
-  RxBool get isLogin => _isLogin;
+  RxBool? get isLogin => _isLogin;
   String get userEmail => _userEmail;
-  // property는 getter로 가져오고 setter로 설정한다.
   set userEmail(email) => _userEmail = email;
   String get userName => _userName;
   set userName(username) => _userName = username;
@@ -45,36 +47,61 @@ class AuthController extends GetxController {
     return null;
   }
 
+  void pickedImage(File image) {
+    userImageFile = image;
+    print("pickedImage: $userImageFile");
+    update();
+  }
+
   void trySubmit() {
     final isValid = _formKey.currentState!.validate();
     Get.focusScope!.unfocus();
+
+    print("trySubmit: $userImageFile");
+
+    if (userImageFile == null && !_isLogin!.value) {
+      print(_isLogin!.value);
+      print("if: $userImageFile");
+
+      Get.showSnackbar(
+        GetBar(
+          message: 'Please pick an image',
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
 
     if (isValid) {
       _formKey.currentState!.save();
 
       submitAuthForm(
-        userEmail.trim(),
-        userPassword.trim(),
-        userName.trim(),
-        isLogin.value,
+        _userEmail.trim(),
+        _userPassword.trim(),
+        _userName.trim(),
+        _isLogin!.value,
       );
     }
+
+    update();
   }
 
-  void toggleLoginButton() {
-    isLogin(!isLogin.value);
+  void handleLoginButton() {
+    _isLogin!(!_isLogin!.value);
+    update();
   }
 
   void submitAuthForm(
     String email,
     String password,
     String username,
-    bool isLogin,
+    bool _isLogin,
   ) async {
     UserCredential userCredential;
     try {
       isLoading(true);
-      if (isLogin) {
+      if (_isLogin) {
         userCredential = await auth.signInWithEmailAndPassword(
           email: email,
           password: password,
@@ -94,6 +121,8 @@ class AuthController extends GetxController {
         'username': username,
         'email': email,
       });
+
+      isLoading(false);
     } on FirebaseAuthException catch (error) {
       var message = 'An error occurred, please check your credentials';
 
@@ -113,5 +142,7 @@ class AuthController extends GetxController {
       print(error);
       isLoading(false);
     }
+
+    update();
   }
 }
