@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +13,7 @@ class AuthController extends GetxController {
   String _userEmail = '';
   String _userName = '';
   String _userPassword = '';
-  File? userImageFile;
+  File? _userImageFile;
 
   GlobalKey<FormState> get formKey => _formKey;
   RxBool? get isLogin => _isLogin;
@@ -48,8 +49,8 @@ class AuthController extends GetxController {
   }
 
   void pickedImage(File image) {
-    userImageFile = image;
-    print("pickedImage: $userImageFile");
+    _userImageFile = image;
+    print("pickedImage: $_userImageFile");
     update();
   }
 
@@ -57,11 +58,11 @@ class AuthController extends GetxController {
     final isValid = _formKey.currentState!.validate();
     Get.focusScope!.unfocus();
 
-    print("trySubmit: $userImageFile");
+    print("trySubmit: $_userImageFile");
 
-    if (userImageFile == null && !_isLogin!.value) {
+    if (_userImageFile == null && !_isLogin!.value) {
       print(_isLogin!.value);
-      print("if: $userImageFile");
+      print("if: $_userImageFile");
 
       Get.showSnackbar(
         GetBar(
@@ -80,6 +81,7 @@ class AuthController extends GetxController {
         _userEmail.trim(),
         _userPassword.trim(),
         _userName.trim(),
+        _userImageFile,
         _isLogin!.value,
       );
     }
@@ -96,6 +98,7 @@ class AuthController extends GetxController {
     String email,
     String password,
     String username,
+    File? image,
     bool _isLogin,
   ) async {
     UserCredential userCredential;
@@ -111,18 +114,32 @@ class AuthController extends GetxController {
           email: email,
           password: password,
         );
+
+        // ref()
+        // 'user_image' => folder
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child(userCredential.user!.uid + '.jpg');
+
+        UploadTask uploadTask = ref.putFile(image!);
+        uploadTask.whenComplete(
+          () async {
+            final url = await ref.getDownloadURL();
+
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(userCredential.user!.uid)
+                .set({
+              'username': username,
+              'email': email,
+              'image_url': url,
+            });
+
+            isLoading(false);
+          },
+        );
       }
-
-      // set({}) 데이터는 Future을 리턴하기때문에 await 키워드 추가
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .set({
-        'username': username,
-        'email': email,
-      });
-
-      isLoading(false);
     } on FirebaseAuthException catch (error) {
       var message = 'An error occurred, please check your credentials';
 
