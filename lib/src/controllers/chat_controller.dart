@@ -25,6 +25,7 @@ class ChatController extends GetxController {
       'createdAt': Timestamp.now(),
       'userId': user.uid,
       'username': userData['username'],
+      'userImage': userData['image_url'],
     });
     textController.clear();
   }
