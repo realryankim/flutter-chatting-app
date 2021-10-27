@@ -15,6 +15,9 @@ class NewMessage extends GetView<ChatController> {
           Expanded(
             child: TextField(
               controller: controller.textController,
+              textCapitalization: TextCapitalization.sentences,
+              autocorrect: true,
+              enableSuggestions: true,
               decoration: InputDecoration(labelText: 'Send a message...'),
               onChanged: (value) {
                 controller.enterMessage(value);

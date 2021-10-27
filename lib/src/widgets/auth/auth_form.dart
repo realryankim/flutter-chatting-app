@@ -27,6 +27,9 @@ class AuthForm extends GetView<AuthController> {
                       ),
                     TextFormField(
                       key: ValueKey('email'),
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.none,
+                      enableSuggestions: false,
                       validator: (value) {
                         return controller.emailValidator(value!);
                       },
@@ -42,6 +45,9 @@ class AuthForm extends GetView<AuthController> {
                     if (!controller.isLogin!.value)
                       TextFormField(
                         key: ValueKey('username'),
+                        autocorrect: true,
+                        textCapitalization: TextCapitalization.words,
+                        enableSuggestions: false,
                         validator: (value) {
                           return controller.userNameValidator(value!);
                         },
