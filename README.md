@@ -1,16 +1,25 @@
-# flutter_chatting_app
+# Flutter Chatting App
 
-A new Flutter project.
+플러터 채팅 앱
 
-## Getting Started
+## Features
+- 파이어베이스 회원가입 + 로그인
+- 카메라 촬영 이미지 업로드
+- 다른 사용자에게 메시지 보내기
 
-This project is a starting point for a Flutter application.
+## Screenshots
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/27044221/145764117-305b7f81-d1c5-424d-9367-3feeba720fe3.gif?raw=true" alt="Signup Screen" width="250">
+  <img src="https://user-images.githubusercontent.com/27044221/145764125-14e8ef8d-3407-492b-8689-6cff9008926d.gif?raw=true" alt="Login Screen" width="250">
+  <img src="https://user-images.githubusercontent.com/27044221/145764133-479dd299-e220-49a4-8c3c-22995aad3fb6.gif?raw=true" alt="Chat To Other User" width="500">
+</p>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Dependencies
+- [Flutter](https://flutter.dev/)
+- [Get](https://pub.dev/packages/get)
+- [Cloud Firestore](https://pub.dev/packages/cloud_firestore)
+- [Firebase Core](https://pub.dev/packages/firebase_core)
+- [Firebase Auth](https://pub.dev/packages/firebase_auth)
+- [Firebase Storage](https://pub.dev/packages?q=firebase+storage)
+- [Firebase messaging](https://pub.dev/packages/firebase_messaging)
+- [Image Picker](https://pub.dev/packages/image_picker)
