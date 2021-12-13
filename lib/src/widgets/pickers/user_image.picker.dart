@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_chatting_app/src/utils/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserImagePicker extends StatefulWidget {
@@ -14,9 +15,15 @@ class UserImagePicker extends StatefulWidget {
 class _UserImagePickerState extends State<UserImagePicker> {
   File? _pickedImageFile;
 
+  void _selectImage() async {
+    final picker = ImagePicker();
+    final selectedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (selectedImage == null) return null;
+    // TODO: Select Image and save
+  }
+
   void _pickImage() async {
     final picker = ImagePicker();
-    // final pickedImage = await picker.pickImage(source: ImageSource.gallery);
     final pickedImage = await picker.pickImage(
       source: ImageSource.camera,
       imageQuality: 50,
@@ -25,9 +32,9 @@ class _UserImagePickerState extends State<UserImagePicker> {
     setState(() {
       if (pickedImage != null) {
         _pickedImageFile = File(pickedImage.path);
-        print('File path');
+        // print('File path');
       } else {
-        print('No image selected.');
+        // print('No image selected.');
       }
       widget.imagePickFn(_pickedImageFile!);
     });
@@ -47,8 +54,9 @@ class _UserImagePickerState extends State<UserImagePicker> {
         ),
         TextButton.icon(
           onPressed: _pickImage,
-          icon: const Icon(Icons.image),
-          label: const Text('Add Image'),
+          icon: const Icon(Icons.image, color: ColorsCH.primary),
+          label: const Text('Add Image',
+              style: TextStyle(color: ColorsCH.primary)),
         ),
       ],
     );

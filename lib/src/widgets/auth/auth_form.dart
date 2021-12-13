@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/src/controllers/auth_controller.dart';
+import 'package:flutter_chatting_app/src/utils/colors.dart';
 import 'package:flutter_chatting_app/src/widgets/pickers/user_image.picker.dart';
 
 import 'package:get/get.dart';
@@ -76,7 +77,7 @@ class AuthForm extends GetView<AuthController> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          primary: Colors.pink,
+                          primary: ColorsCH.primary,
                           onPrimary: Colors.white,
                         ),
                         onPressed: controller.trySubmit,
@@ -87,7 +88,7 @@ class AuthForm extends GetView<AuthController> {
                             ? 'Create new account'
                             : 'I already have an account'),
                         style: TextButton.styleFrom(
-                          primary: Colors.pink,
+                          primary: ColorsCH.primary,
                         ),
                         onPressed: controller.handleLoginButton,
                       ),

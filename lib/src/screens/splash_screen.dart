@@ -7,11 +7,12 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: Center(
+      body: const Center(
         child: Text(
           'Loading...',
           style: TextStyle(
             color: Colors.white,
+            fontSize: 25.0,
           ),
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chatting_app/src/app.dart';
 import 'package:flutter_chatting_app/src/bindings/binding.dart';
+import 'package:flutter_chatting_app/src/utils/colors.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -20,15 +21,19 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Chatting App',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
-        backgroundColor: Colors.pink,
+        primaryColor: ColorsCH.primary,
+        backgroundColor: ColorsCH.primary,
         colorScheme:
-            ColorScheme.fromSwatch(primarySwatch: Colors.pink).copyWith(
-          secondary: Colors.deepPurple,
+            ColorScheme.fromSwatch(primaryColorDark: Colors.blue).copyWith(
+          primary: ColorsCH.primary,
+          secondary: ColorsCH.primary,
+        ),
+        appBarTheme: AppBarTheme(
+          color: ColorsCH.primary,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         buttonTheme: ButtonTheme.of(context).copyWith(
-          buttonColor: Colors.pink,
+          buttonColor: ColorsCH.primary,
           textTheme: ButtonTextTheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

@@ -50,7 +50,7 @@ class AuthController extends GetxController {
 
   void pickedImage(File image) {
     _userImageFile = image;
-    print("pickedImage: $_userImageFile");
+    // print("pickedImage: $_userImageFile");
     update();
   }
 
@@ -58,11 +58,11 @@ class AuthController extends GetxController {
     final isValid = _formKey.currentState!.validate();
     Get.focusScope!.unfocus();
 
-    print("trySubmit: $_userImageFile");
+    // print("trySubmit: $_userImageFile");
 
     if (_userImageFile == null && !_isLogin!.value) {
-      print(_isLogin!.value);
-      print("if: $_userImageFile");
+      // print(_isLogin!.value);
+      // print("if: $_userImageFile");
 
       Get.showSnackbar(
         GetBar(
@@ -84,9 +84,9 @@ class AuthController extends GetxController {
         _userImageFile,
         _isLogin!.value,
       );
-    }
 
-    update();
+      isLoading(false);
+    }
   }
 
   void handleLoginButton() {
@@ -159,7 +159,5 @@ class AuthController extends GetxController {
       print(error);
       isLoading(false);
     }
-
-    update();
   }
 }

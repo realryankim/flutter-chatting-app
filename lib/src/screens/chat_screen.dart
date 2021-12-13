@@ -1,16 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chatting_app/src/controllers/chat_controller.dart';
 import 'package:flutter_chatting_app/src/widgets/chat/messages.dart';
 import 'package:flutter_chatting_app/src/widgets/chat/new_message.dart';
 import 'package:get/get.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Handling a background message ${message.messageId}");
+  // print("Handling a background message ${message.messageId}");
 }
 
 class ChatScreen extends StatefulWidget {
@@ -28,17 +26,17 @@ class _ChatScreenState extends State<ChatScreen> {
     final messaging = FirebaseMessaging.instance;
     messaging.requestPermission();
     messaging.getToken().then((value) {
-      print(value);
+      // print(value);
     });
 
     messaging.subscribeToTopic('chat');
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("message recieved");
-      print(event.notification!.body);
+      // print("message recieved");
+      // print(event.notification!.body);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print("Message clicked!");
+      // print("Message clicked!");
     });
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -54,7 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: DropdownButton(
               icon: Icon(
                 Icons.more_vert,
-                color: Theme.of(context).primaryIconTheme.color,
+                color: Colors.white,
               ),
               items: [
                 DropdownMenuItem(
